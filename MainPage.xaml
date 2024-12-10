@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Students_Notes.MainPage"
+             BackgroundColor="#F8F9FA">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header with Gradient Background -->
+        <Grid Grid.Row="0" BackgroundColor="#FFFFFF" Padding="20,15">
+            <Grid.Shadow>
+                <Shadow Brush="#20000000"
+                        Offset="0,2"
+                        Radius="4"/>
+            </Grid.Shadow>
+            
+            <VerticalStackLayout Spacing="0">
+                <Label Text="Your Favourite"
+                       FontSize="32"
+                       TextColor="#2D3436"
+                       FontAttributes="Bold"
+                       CharacterSpacing="1"/>
+                <Label Text="Handwritten"
+                       FontSize="32"
+                       TextColor="#2D3436"
+                       FontAttributes="Bold"
+                       CharacterSpacing="1"/>
+                <Label Text="Notes Organizer"
+                       FontSize="32"
+                       TextColor="#2D3436"
+                       FontAttributes="Bold"
+                       CharacterSpacing="1"/>
+                
+                <!-- Enhanced Search Bar -->
+                <Frame Margin="0,20,0,5" 
+                       Padding="15,5"
+                       BorderColor="#E0E0E0"
+                       BackgroundColor="#F8F9FA"
+                       CornerRadius="12"
+                       HasShadow="False">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Image Grid.Column="0"
+                               Source="search.png"
+                               HeightRequest="20"
+                               Opacity="0.6"/>
+                        <Entry Grid.Column="1"
+                               Placeholder="Search notes..."
+                               PlaceholderColor="#ADB5BD"
+                               TextColor="#495057"
+                               BackgroundColor="Transparent"
+                               Margin="10,0"/>
+                        <ImageButton Grid.Column="2"
+                                    Source="filter.png"
+                                    HeightRequest="20"
+                                    BackgroundColor="Transparent"
+                                    Opacity="0.6"/>
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Folders Grid with Enhanced Styling -->
+        <ScrollView Grid.Row="1">
+            <FlexLayout Wrap="Wrap"
+                        JustifyContent="Start"
+                        Padding="15,20">
+                <Grid RowDefinitions="Auto,Auto" 
+                      Margin="8"
+                      WidthRequest="165">
+                    <Frame BackgroundColor="White"
+                           CornerRadius="15"
+                           Padding="0"
+                           HasShadow="True">
+                        <Grid RowDefinitions="Auto,Auto" Padding="10">
+                            <Image Source="folder.png"
+                                   HeightRequest="110"
+                                   Aspect="AspectFit"
+                                   Margin="0,5"/>
+                            <Label Text="Physics Notes"
+                                   Grid.Row="1"
+                                   HorizontalOptions="Center"
+                                   FontSize="14"
+                                   TextColor="#495057"
+                                   FontAttributes="Bold"
+                                   Margin="0,8"/>
+                        </Grid>
+                    </Frame>
+                </Grid>
+
+                <Grid RowDefinitions="Auto,Auto" 
+                      Margin="8"
+                      WidthRequest="165">
+                    <Frame BackgroundColor="White"
+                           CornerRadius="15"
+                           Padding="0"
+                           HasShadow="True">
+                        <Grid RowDefinitions="Auto,Auto" Padding="10">
+                            <Image Source="folder.png"
+                                   HeightRequest="110"
+                                   Aspect="AspectFit"
+                                   Margin="0,5"/>
+                            <Label Text="Chemistry Notes"
+                                   Grid.Row="1"
+                                   HorizontalOptions="Center"
+                                   FontSize="14"
+                                   TextColor="#495057"
+                                   FontAttributes="Bold"
+                                   Margin="0,8"/>
+                        </Grid>
+                    </Frame>
+                </Grid>
+
+                <Grid RowDefinitions="Auto,Auto" 
+                      Margin="8"
+                      WidthRequest="165">
+                    <Frame BackgroundColor="White"
+                           CornerRadius="15"
+                           Padding="0"
+                           HasShadow="True">
+                        <Grid RowDefinitions="Auto,Auto" Padding="10">
+                            <Image Source="folder.png"
+                                   HeightRequest="110"
+                                   Aspect="AspectFit"
+                                   Margin="0,5"/>
+                            <Label Text="Biology Notes"
+                                   Grid.Row="1"
+                                   HorizontalOptions="Center"
+                                   FontSize="14"
+                                   TextColor="#495057"
+                                   FontAttributes="Bold"
+                                   Margin="0,8"/>
+                        </Grid>
+                    </Frame>
+                </Grid>
+
+                <Grid RowDefinitions="Auto,Auto" 
+                      Margin="8"
+                      WidthRequest="165">
+                    <Frame BackgroundColor="White"
+                           CornerRadius="15"
+                           Padding="0"
+                           HasShadow="True">
+                        <Grid RowDefinitions="Auto,Auto" Padding="10">
+                            <Image Source="folder.png"
+                                   HeightRequest="110"
+                                   Aspect="AspectFit"
+                                   Margin="0,5"/>
+                            <Label Text="Math Notes"
+                                   Grid.Row="1"
+                                   HorizontalOptions="Center"
+                                   FontSize="14"
+                                   TextColor="#495057"
+                                   FontAttributes="Bold"
+                                   Margin="0,8"/>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </FlexLayout>
+        </ScrollView>
+
+        <!-- Enhanced Bottom Navigation Bar -->
+        <Grid Grid.Row="2"
+              ColumnDefinitions="*,*,*,*,*"
+              BackgroundColor="#2D3436"
+              HeightRequest="65">
+            <Grid.Shadow>
+                <Shadow Brush="#40000000"
+                        Offset="0,-4"
+                        Radius="8"/>
+            </Grid.Shadow>
+            
+            <!-- Home Button -->
+            <Frame Grid.Column="0"
+                   BackgroundColor="Transparent"
+                   Padding="5"
+                   HasShadow="False">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnHomeClicked"/>
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout Spacing="4"
+                                    VerticalOptions="Center">
+                    <Image Source="home.png"
+                           HeightRequest="24"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Home"
+                           TextColor="#FFFFFF"
+                           FontSize="11"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+            
+            <!-- Notes Button -->
+            <Frame Grid.Column="1"
+                   BackgroundColor="Transparent"
+                   Padding="5"
+                   HasShadow="False">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNotesClicked"/>
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout Spacing="4"
+                                    VerticalOptions="Center">
+                    <Image Source="notes.png"
+                           HeightRequest="24"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Notes"
+                           TextColor="#FFFFFF"
+                           FontSize="11"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+            
+            <!-- Add Button (FAB) -->
+            <Frame Grid.Column="2"
+                   HeightRequest="65"
+                   WidthRequest="65"
+                   CornerRadius="32.5"
+                   BackgroundColor="#00B894"
+                   Padding="0"
+                   Margin="0,-32.5,0,0"
+                   HasShadow="True">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddClicked"/>
+                </Frame.GestureRecognizers>
+                <Image Source="add.png"
+                       HeightRequest="30"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"/>
+            </Frame>
+            
+            <!-- AI Chat Button -->
+            <Frame Grid.Column="3"
+                   BackgroundColor="Transparent"
+                   Padding="5"
+                   HasShadow="False">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAIClicked"/>
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout Spacing="4"
+                                    VerticalOptions="Center">
+                    <Image Source="ai.png"
+                           HeightRequest="24"
+                           HorizontalOptions="Center"/>
+                    <Label Text="AI Chat"
+                           TextColor="#FFFFFF"
+                           FontSize="11"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+            
+            <!-- Profile Button -->
+            <Frame Grid.Column="4"
+                   BackgroundColor="Transparent"
+                   Padding="5"
+                   HasShadow="False">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnProfileClicked"/>
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout Spacing="4"
+                                    VerticalOptions="Center">
+                    <Image Source="profile.png"
+                           HeightRequest="24"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Profile"
+                           TextColor="#FFFFFF"
+                           FontSize="11"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+
+</ContentPage>
