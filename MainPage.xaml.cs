@@ -10,17 +10,17 @@
         // Add handlers for navigation buttons
         private async void OnHomeClicked(object sender, EventArgs e)
         {
-            // Handle home navigation
+            await Shell.Current.GoToAsync("//MainPage");
         }
 
         private async void OnNotesClicked(object sender, EventArgs e)
         {
-            // Handle notes navigation
+            await DisplayAlert("Notes", "Notes feature coming soon!", "OK");
         }
 
         private async void OnAddClicked(object sender, EventArgs e)
         {
-            // Handle add new note
+            await DisplayAlert("Add Note", "Add Note feature coming soon!", "OK");
         }
 
         private async void OnSettingsClicked(object sender, EventArgs e)
@@ -30,7 +30,7 @@
 
         private async void OnProfileClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Views.ProfilePage());
+            await Shell.Current.GoToAsync("//Profile");
         }
 
         private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -54,7 +54,7 @@
 
         private async void OnAIClicked(object sender, EventArgs e)
         {
-            // Handle AI chat navigation or open AI chat interface
+            await DisplayAlert("AI Chat", "AI Chat feature coming soon!", "OK");
         }
     }
 }

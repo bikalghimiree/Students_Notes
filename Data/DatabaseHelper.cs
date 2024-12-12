@@ -10,7 +10,8 @@ namespace Students_Notes.Data
         public DatabaseHelper(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<User>().Wait();
+            _database.DropTableAsync<User>().Wait();
+            _database.CreateTableAsync<User>(CreateFlags.None).Wait();
         }
 
         public async Task<User> GetUserAsync()
@@ -47,6 +48,17 @@ namespace Students_Notes.Data
             if (user != null)
             {
                 user.Name = name;
+                return await _database.UpdateAsync(user);
+            }
+            return 0;
+        }
+
+        public async Task<int> UpdateUserPasswordAsync(string password)
+        {
+            var user = await GetUserAsync();
+            if (user != null)
+            {
+                user.Password = password;
                 return await _database.UpdateAsync(user);
             }
             return 0;

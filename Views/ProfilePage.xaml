@@ -13,13 +13,20 @@
                 
                 <!-- Back Button -->
                 <ImageButton Source="back.png"
-                            HeightRequest="24"
-                            WidthRequest="24"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Start"
-                            Margin="20,40,0,0"
-                            BackgroundColor="Transparent"
-                            Clicked="OnBackButtonClicked"/>
+                             HeightRequest="32"
+                             WidthRequest="32"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Start"
+                             Margin="20,40,0,0"
+                             BackgroundColor="Transparent"
+                             Clicked="OnBackButtonClicked">
+                    <ImageButton.Shadow>
+                        <Shadow Brush="White"
+                                Offset="0,0"
+                                Radius="2"
+                                Opacity="0.5"/>
+                    </ImageButton.Shadow>
+                </ImageButton>
 
                 <VerticalStackLayout Spacing="15" 
                                    VerticalOptions="Center"
@@ -88,12 +95,12 @@
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="#2D3436"/>
-                            <Label Text="All notes are synced and up to date"
-                                   TextColor="#00B894"
+                            <Label Text="{Binding IsSynced, Converter={StaticResource BoolToSyncStatusConverter}}"
+                                   TextColor="{Binding IsSynced, Converter={StaticResource BoolToColorConverter}}"
                                    FontSize="14"/>
                         </VerticalStackLayout>
                         <Image Grid.Column="1"
-                               Source="checkmark_green.png"
+                               Source="{Binding IsSynced, Converter={StaticResource BoolToImageConverter}}"
                                HeightRequest="24"
                                WidthRequest="24"
                                VerticalOptions="Center"/>

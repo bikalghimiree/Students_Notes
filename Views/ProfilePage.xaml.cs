@@ -1,5 +1,6 @@
 using Students_Notes.Data;
 using Students_Notes.Models;
+using CommunityToolkit.Maui.Views;
 
 namespace Students_Notes.Views
 {
@@ -10,6 +11,7 @@ namespace Students_Notes.Views
         private bool _isTapFrameVisible;
         private string _userName;
         private bool _isNameChanged;
+        private bool _isSynced;
 
         public ImageSource ProfileImageSource
         {
@@ -44,12 +46,23 @@ namespace Students_Notes.Views
             }
         }
 
+        public bool IsSynced
+        {
+            get => _isSynced;
+            set
+            {
+                _isSynced = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ProfilePage()
         {
             InitializeComponent();
             _database = new DatabaseHelper(Path.Combine(FileSystem.AppDataDirectory, "students.db3"));
             BindingContext = this;
             LoadUserData();
+            IsSynced = true;
         }
 
         private async void LoadUserData()
@@ -73,7 +86,8 @@ namespace Students_Notes.Views
                 user = new User
                 {
                     Name = "John Doe",
-                    Email = "student@gmail.com"
+                    Email = "student@gmail.com",
+                    Password = "password"
                 };
                 await _database.SaveUserAsync(user);
                 UserName = user.Name;
@@ -83,27 +97,26 @@ namespace Students_Notes.Views
 
         private void OnNameTextChanged(object sender, TextChangedEventArgs e)
         {
-            try
-            {
-                var user = _database.GetUserAsync().GetAwaiter().GetResult();
-                IsNameChanged = user != null && e.NewTextValue != user.Name;
-            }
-            catch (Exception ex)
-            {
-                // Handle any potential errors
-                IsNameChanged = false;
-            }
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+                return;
+
+            IsNameChanged = true;
         }
 
         private async void OnSaveNameClicked(object sender, EventArgs e)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(UserName))
+                {
+                    await DisplayAlert("Error", "Name cannot be empty", "OK");
+                    return;
+                }
+
                 var user = await _database.GetUserAsync();
                 if (user != null)
                 {
-                    user.Name = UserName;
-                    await _database.SaveUserAsync(user);
+                    await _database.UpdateUserNameAsync(UserName);
                     IsNameChanged = false;
                     await DisplayAlert("Success", "Name updated successfully", "OK");
                 }
@@ -146,8 +159,54 @@ namespace Students_Notes.Views
 
         private async void OnChangePasswordClicked(object sender, EventArgs e)
         {
-            // Implement password change logic
-            await DisplayAlert("Change Password", "Password change functionality will be implemented here", "OK");
+            var popup = new PasswordChangePopup();
+            var result = await this.ShowPopupAsync(popup) as PasswordChangeResult;
+
+            if (result == null) // User cancelled
+                return;
+
+            try
+            {
+                var user = await _database.GetUserAsync();
+
+                if (user == null)
+                {
+                    await DisplayAlert("Error", "No user found in database", "OK");
+                    return;
+                }
+
+                if (result.CurrentPassword != user.Password)
+                {
+                    await DisplayAlert("Error", "Current password is incorrect", "OK");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(result.NewPassword))
+                {
+                    await DisplayAlert("Error", "New password cannot be empty", "OK");
+                    return;
+                }
+
+                if (result.NewPassword != result.ConfirmPassword)
+                {
+                    await DisplayAlert("Error", "Passwords do not match", "OK");
+                    return;
+                }
+
+                var updateResult = await _database.UpdateUserPasswordAsync(result.NewPassword);
+                if (updateResult > 0)
+                {
+                    await DisplayAlert("Success", "Password changed successfully", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Failed to update password in database", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Failed to update password", "OK");
+            }
         }
 
         private async void OnSignOutClicked(object sender, EventArgs e)
@@ -161,7 +220,14 @@ namespace Students_Notes.Views
 
         private async void OnBackButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await Shell.Current.GoToAsync("//MainPage");
+        }
+
+        // Also override the hardware back button
+        protected override bool OnBackButtonPressed()
+        {
+            Shell.Current.GoToAsync("//MainPage");
+            return true;
         }
 
         protected override void OnAppearing()

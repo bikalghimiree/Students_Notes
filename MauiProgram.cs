@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Students_Notes.Data;
+using CommunityToolkit.Maui;
 
 namespace Students_Notes
 {
@@ -10,6 +11,7 @@ namespace Students_Notes
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -17,6 +19,7 @@ namespace Students_Notes
                 });
 
             // Register your pages
+            builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<Views.ProfilePage>();
 
 #if DEBUG

@@ -5,6 +5,8 @@
         public App()
         {
             InitializeComponent();
+            Routing.RegisterRoute("MainPage", typeof(MainPage));
+            Routing.RegisterRoute("Profile", typeof(Views.ProfilePage));
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
